@@ -11,10 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_like_comment")
-public class LikeComment extends LikeEntity {
+public class LikeComment extends LikeEntity  {
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
-
-
 }

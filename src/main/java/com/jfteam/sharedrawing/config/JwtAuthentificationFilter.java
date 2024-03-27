@@ -1,6 +1,6 @@
 package com.jfteam.sharedrawing.config;
 
-import com.jfteam.sharedrawing.service.JwtService;
+import com.jfteam.sharedrawing.service.impl.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

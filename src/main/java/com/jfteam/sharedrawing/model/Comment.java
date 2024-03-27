@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_comment")
-public class Comment implements Like<LikeComment> {
+public class Comment implements Like<LikeComment>,  IGenericEntity {
 
     @Id
     @GeneratedValue
@@ -41,6 +42,12 @@ public class Comment implements Like<LikeComment> {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<LikeComment> likes;
+
+    @Formula("(SELECT COALESCE(COUNT(*), 0) FROM _like_comment ld WHERE ld.comment_id = id AND ld.liked = true)")
+    private int countLikes;
+
+    @Formula("(SELECT COALESCE(COUNT(*), 0) FROM _like_comment ld WHERE ld.comment_id = id AND ld.liked = false)")
+    private int countDislikes;
 
     @Override
     public List<LikeComment> getLikes() {

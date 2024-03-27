@@ -1,6 +1,6 @@
 package com.jfteam.sharedrawing.config;
 
-import com.jfteam.sharedrawing.repo.UserRepository;
+import com.jfteam.sharedrawing.repo.IUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UserRepository repository;
+    private final IUserRepository repository;
 
     @Bean
     public UserDetailsService userDetailsService() {

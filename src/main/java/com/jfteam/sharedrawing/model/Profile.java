@@ -14,10 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_profile")
-public class Profile {
+public class Profile implements IGenericEntity {
     @Id
     @GeneratedValue
     private long id;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 
     @Column(unique = true)
     private String pseudo;
@@ -31,4 +36,7 @@ public class Profile {
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private List<Favorite> favorites;
 }

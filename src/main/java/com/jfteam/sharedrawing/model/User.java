@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User implements UserDetails, IGenericEntity  {
     @Id
     @GeneratedValue
     private long id;
@@ -27,13 +27,17 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
     @Column(length = 255)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

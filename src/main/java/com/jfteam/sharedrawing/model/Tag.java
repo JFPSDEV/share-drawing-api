@@ -14,10 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_tag")
-public class Tag {
+public class Tag implements IGenericEntity  {
     @Id
     @GeneratedValue
     private long id;
+    @Override
+    public Long getId() {
+        return id;
+    }
     private String name;
 
     @ManyToMany(mappedBy = "tags")

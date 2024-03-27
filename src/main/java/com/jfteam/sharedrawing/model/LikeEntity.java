@@ -10,17 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public abstract class LikeEntity {
+public abstract class LikeEntity implements IGenericEntity {
     @Id
     @GeneratedValue
-    private long id;
+    public long id;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
-
     private Boolean liked;
 
-    public LikeEntity(Profile profile, Boolean liked) {
-    }
 }

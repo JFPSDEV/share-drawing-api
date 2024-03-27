@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_drawing")
-public class Drawing implements Like<LikeDrawing>  {
+public class Drawing implements Like<LikeDrawing>, IGenericEntity  {
 
     @Id
     @GeneratedValue
@@ -46,9 +47,23 @@ public class Drawing implements Like<LikeDrawing>  {
     @OneToMany(mappedBy = "drawing", cascade = CascadeType.ALL)
     private List<LikeDrawing> likes;
 
+    @Formula("(SELECT COALESCE(COUNT(*), 0) FROM _like_drawing ld WHERE ld.drawing_id = id AND ld.liked = true)")
+    private int countLikes;
+
+    @Formula("(SELECT COALESCE(COUNT(*), 0) FROM _like_drawing ld WHERE ld.drawing_id = id AND ld.liked = false)")
+    private int countDislikes;
+
+    @OneToMany(mappedBy = "drawing", cascade = CascadeType.ALL)
+    private List<Rating> rates;
+
+    @Formula("(SELECT COALESCE(AVG(r.rate), 0) FROM _rating r WHERE r.drawing_id = id)")
+    private double rateAverage;
+
+    @Formula("(SELECT COALESCE(COUNT(*), 0) FROM _rating r WHERE r.drawing_id = id)")
+    private int countRates;
+
     @Override
     public List<LikeDrawing> getLikes() {
         return likes;
     }
-
 }

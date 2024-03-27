@@ -1,6 +1,7 @@
 package com.jfteam.sharedrawing.dto.comment;
 
-import com.jfteam.sharedrawing.dto.profile.ShortProfileDto;
+import com.jfteam.sharedrawing.dto.like.ShortLikeResponseDto;
+import com.jfteam.sharedrawing.dto.profile.ShortProfileResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,9 @@ import java.util.List;
 public class CommentDto {
     private long id;
     private String message;
-    private ShortProfileDto profile;
+    private ShortProfileResponseDto profile;
     private List<CommentDto> replies;
+  //  private List<ShortLikeResponseDto> likes;
+    private int countLikes;
+    private int countDislikes;
 }
