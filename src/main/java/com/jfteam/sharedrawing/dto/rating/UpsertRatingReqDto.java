@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto;
+package com.jfteam.sharedrawing.dto.rating;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequestDto {
-    private String email;
-    private String password;
+public class UpsertRatingReqDto {
+    Long drawingId;
+    Integer rate;
 }

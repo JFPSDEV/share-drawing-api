@@ -1,18 +1,18 @@
 package com.jfteam.sharedrawing.dto.drawing;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.query.SortDirection;
 
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddDrawingRequestDto {
-    DrawingDto drawing;
-    Long profileId;
-    List<Long> tagIds;
+public class FilterDrawingReqDto {
+    private Integer page;
+    private Integer size;
+    private List<Long> tagIds;
+    private SortDirection sortDirection;
 }

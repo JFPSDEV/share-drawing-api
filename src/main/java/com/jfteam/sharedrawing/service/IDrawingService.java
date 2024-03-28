@@ -1,30 +1,24 @@
 package com.jfteam.sharedrawing.service;
 
-import com.jfteam.sharedrawing.dto.drawing.*;
-import com.jfteam.sharedrawing.dto.like.LikeDrawingResponseDto;
-import com.jfteam.sharedrawing.dto.like.LikeRequestDto;
-import com.jfteam.sharedrawing.dto.like.UnlikeRequestDto;
-import com.jfteam.sharedrawing.dto.rating.RatingResponseDto;
-import com.jfteam.sharedrawing.dto.rating.UpsertRatingRequestDto;
+
+import org.hibernate.query.SortDirection;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import com.jfteam.sharedrawing.model.*;
-
 import java.util.List;
-import java.util.Optional;
 
-public interface IDrawingService {
-    public LikeDrawingResponseDto getDrawingLike(Long profileId, Long entityId);
-    public DrawingDetailsResponseDto getDrawingDetails(Drawing drawing);
 
-    public  LikeDrawingResponseDto likeDrawing(LikeRequestDto payload);
+public interface IDrawingService extends IGetableService<Drawing> {
 
-    public Boolean unlikeDrawing(UnlikeRequestDto payload);
+    public LikeDrawing getDrawingLike(Long profileId, Long entityId);
 
-    public RatingResponseDto rateDrawing(UpsertRatingRequestDto payload);
+    public LikeDrawing likeDrawing(Long drawingId, Boolean liked, Authentication auth);
 
-    public DrawingByIdResponseDto getById(Long id, Authentication auth);
+    public Boolean unlikeDrawing(Long drawingId, Authentication auth);
 
-    public DrawingItemResponseDto create(AddDrawingRequestDto payload);
+    public Rating rateDrawing(Long drawingId, Integer rate,  Authentication auth);
 
-    public List<DrawingItemResponseDto> getList(Optional<FilterDrawingRequestDto> payload);
+    public Drawing create(Drawing drawing, List<Long> tagsId, Authentication auth);
+
+    public Page<Drawing> getList(Integer page, Integer size, SortDirection sortDirection, List<Long> tagIds);
 }

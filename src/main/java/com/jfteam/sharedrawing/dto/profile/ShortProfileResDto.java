@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.favorite;
+package com.jfteam.sharedrawing.dto.profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddFavoriteRequestDto {
-    private Long profileId;
-    private Long drawingId;
+public class ShortProfileResDto {
+    private Long id;
+    private String pseudo;
 }

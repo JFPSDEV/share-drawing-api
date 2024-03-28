@@ -1,6 +1,6 @@
 package com.jfteam.sharedrawing.dto.drawing;
 
-import com.jfteam.sharedrawing.dto.tag.TagItemResponseDto;
+import com.jfteam.sharedrawing.dto.tag.TagItemResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class DrawingDto {
     private String name;
     private String description;
     private List<String> sourceUrls;
-    private List<TagItemResponseDto> tags;
+    private List<TagItemResDto> tags;
 }

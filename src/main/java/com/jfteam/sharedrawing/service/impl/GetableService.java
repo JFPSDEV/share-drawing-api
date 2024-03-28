@@ -17,8 +17,6 @@ public abstract class GetableService<Entity extends IGenericEntity> implements I
     @Autowired
     public JpaRepository<Entity, Long> repository;
 
-  
-
     @Override
     public Entity getById(Long id) {
         try {

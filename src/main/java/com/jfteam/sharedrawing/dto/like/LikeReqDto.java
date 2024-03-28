@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.rating;
+package com.jfteam.sharedrawing.dto.like;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpsertRatingRequestDto {
-    Long drawingId;
-    Long profileId;
-    Integer rate;
+public class LikeReqDto {
+    private Long entityId;
+    private Boolean liked;
 }

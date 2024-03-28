@@ -1,18 +1,16 @@
 package com.jfteam.sharedrawing.dto.drawing;
 
 import com.jfteam.sharedrawing.dto.comment.CommentDto;
-import com.jfteam.sharedrawing.dto.like.ShortLikeResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DrawingDetailsResponseDto extends DrawingItemResponseDto {
+public class DrawingDetailsResDto extends DrawingItemResDto {
     private List<CommentDto> comments;
     //private List<ShortLikeResponseDto> likes;
     private int countLikes;

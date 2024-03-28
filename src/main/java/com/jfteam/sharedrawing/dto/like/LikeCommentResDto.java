@@ -1,7 +1,7 @@
 package com.jfteam.sharedrawing.dto.like;
 
 import com.jfteam.sharedrawing.dto.comment.ShortCommentDto;
-import com.jfteam.sharedrawing.dto.profile.ShortProfileResponseDto;
+import com.jfteam.sharedrawing.dto.profile.ShortProfileResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeCommentResponseDto {
+public class LikeCommentResDto {
     private long id;
     private ShortCommentDto comment;
-    private ShortProfileResponseDto profile;
+    private ShortProfileResDto profile;
     private Boolean liked;
 }

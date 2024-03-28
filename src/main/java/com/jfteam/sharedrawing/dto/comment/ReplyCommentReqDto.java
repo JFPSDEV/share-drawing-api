@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyCommentRequestDto {
+public class ReplyCommentReqDto {
     private Long parentCommentId;
-    private Long profileId;
-    private Long drawingId;
     private String message;
 }

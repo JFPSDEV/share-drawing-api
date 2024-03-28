@@ -1,20 +1,16 @@
 package com.jfteam.sharedrawing.service.impl;
 
-import com.jfteam.sharedrawing.dto.comment.AddCommentRequestDto;
-import com.jfteam.sharedrawing.dto.comment.CommentDto;
-import com.jfteam.sharedrawing.dto.comment.ReplyCommentRequestDto;
-import com.jfteam.sharedrawing.dto.like.*;
 import com.jfteam.sharedrawing.exception.ServerSideException;
 import com.jfteam.sharedrawing.model.*;
 import com.jfteam.sharedrawing.repo.ICommentRepository;
 import com.jfteam.sharedrawing.repo.ILikeCommentRepository;
-import org.modelmapper.ModelMapper;
+import com.jfteam.sharedrawing.service.ICommentService;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService extends LikeService<Comment, LikeComment> {
+public class CommentService extends LikeService<Comment, LikeComment> implements ICommentService {
     private final ICommentRepository commentRepo;
     private final ProfileService profileSrv;
     private final DrawingService drawingSrv;
@@ -47,49 +43,41 @@ public class CommentService extends LikeService<Comment, LikeComment> {
         return likeCommentRepo.findByProfileIdAndCommentId(profileId, entityId);
     }
 
-    public CommentDto getCommentDetails(Comment comment) {
-        return new ModelMapper().map(comment, CommentDto.class);
+    public LikeComment likeComment(Long commentId, Boolean liked, Authentication auth) {
+        return likeOrDislike(commentId, liked, auth);
     }
 
-    public LikeCommentResponseDto likeComment(LikeRequestDto payload) {
-        return new ModelMapper().map(like(payload), LikeCommentResponseDto.class);
+    public Boolean unlikeComment(Long commentId, Authentication auth) {
+        return unlike(commentId, auth);
     }
 
-    public Boolean unlikeComment(UnlikeRequestDto payload) {
-        return unlike(payload);
-    }
-
-    public CommentDto comment(AddCommentRequestDto payload) {
-        Profile profile = profileSrv.getById(payload.getProfileId());
-        Drawing drawing = drawingSrv.getById(payload.getDrawingId());
+    public Comment comment(Long drawingId, String message, Authentication auth) {
+        Profile profile = profileSrv.getByAuth(auth);
+        Drawing drawing = drawingSrv.getById(drawingId);
 
         try {
-            Comment newComment = Comment.builder()
-                    .message(payload.getMessage())
+            return commentRepo.save(
+                    Comment.builder()
+                    .message(message)
                     .profile(profile)
                     .drawing(drawing)
-                    .build();
-
-            Comment savedComment = commentRepo.save(newComment);
-            return getCommentDetails(savedComment);
+                    .build()
+            );
         } catch (Exception e) {
             throw new ServerSideException("Error creating Comment entity", e);
         }
     }
 
 
-    public CommentDto reply(ReplyCommentRequestDto payload) {
-        Comment parentComment = getById(payload.getParentCommentId());
-        Profile profile = profileSrv.getById(payload.getProfileId());
-
+    public Comment reply(Long parentCommentId, String message, Authentication auth) {
+        Comment parentComment = getById(parentCommentId);
+        Profile profile = profileSrv.getByAuth(auth);
         try {
             Comment reply = new Comment();
             reply.setProfile(profile);
             reply.setParentComment(parentComment);
-            reply.setMessage(payload.getMessage());
-
-            Comment savedComment = commentRepo.save(commentRepo.save(reply));
-            return getCommentDetails(savedComment);
+            reply.setMessage(message);
+            return commentRepo.save(commentRepo.save(reply));
         } catch (Exception e) {
             throw new ServerSideException("Error creating Reply Comment entity", e);
         }

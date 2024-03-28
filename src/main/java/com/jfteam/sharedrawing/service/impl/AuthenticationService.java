@@ -1,8 +1,5 @@
 package com.jfteam.sharedrawing.service.impl;
 
-import com.jfteam.sharedrawing.dto.AuthenticationRequestDto;
-import com.jfteam.sharedrawing.dto.AuthenticationResponseDto;
-import com.jfteam.sharedrawing.dto.RegisterRequestDto;
 import com.jfteam.sharedrawing.model.Profile;
 import com.jfteam.sharedrawing.repo.IProfileRepository;
 import com.jfteam.sharedrawing.repo.IUserRepository;
@@ -24,14 +21,14 @@ public class AuthenticationService implements IAuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final IProfileRepository IProfileRepository;
 
-    public AuthenticationResponseDto register(RegisterRequestDto payload) {
+    public String register(String firstName, String lastName, String email, String pwd, String pseudo) {
         User registerUser = IUserRepository.save(
                User
                 .builder()
-                .firstName(payload.getFirstName())
-                .lastName(payload.getLastName())
-                .email(payload.getEmail())
-                .password(pwdEncoder.encode(payload.getPassword()))
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .password(pwdEncoder.encode(pwd))
                 .role(Role.USER)
                 .build()
         );
@@ -39,23 +36,17 @@ public class AuthenticationService implements IAuthenticationService {
         Profile profile  = IProfileRepository.save(
                 Profile
                 .builder()
-                .pseudo(payload.getProfile().getPseudo())
+                .pseudo(pseudo)
                 .user(registerUser)
                 .build()
         );
 
-        var jwtToken = jwtService.generateToken(profile.getUser());
-        return AuthenticationResponseDto.builder().token(jwtToken).build();
+        return jwtService.generateToken(profile.getUser());
     }
 
-    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(), request.getPassword()
-        ));
-
-        var user = IUserRepository.findByEmail(request.getEmail()).orElseThrow();
-
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponseDto.builder().token(jwtToken).build();
+    public String authenticate(String email, String pwd) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, pwd));
+        var user = IUserRepository.findByEmail(email).orElseThrow();
+        return jwtService.generateToken(user);
     }
 }

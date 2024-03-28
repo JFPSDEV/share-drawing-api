@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.comment;
+package com.jfteam.sharedrawing.dto.favorite;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddCommentRequestDto {
-    private Long profileId;
+public class AddFavoriteReqDto {
     private Long drawingId;
-    private String message;
 }

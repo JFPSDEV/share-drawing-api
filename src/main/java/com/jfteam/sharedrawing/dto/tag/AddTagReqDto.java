@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.like;
+package com.jfteam.sharedrawing.dto.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeRequestDto {
-    private Long profileId;
-    private Long entityId;
-    private Boolean liked;
+public class AddTagReqDto {
+    String name;
 }

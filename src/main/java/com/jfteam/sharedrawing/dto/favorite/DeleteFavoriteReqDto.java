@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.tag;
+package com.jfteam.sharedrawing.dto.favorite;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddTagRequestDto {
-    String name;
+public class DeleteFavoriteReqDto {
+    private Long favoriteId;
 }

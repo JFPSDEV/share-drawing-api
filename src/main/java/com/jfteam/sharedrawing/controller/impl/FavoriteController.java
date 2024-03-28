@@ -2,29 +2,35 @@ package com.jfteam.sharedrawing.controller.impl;
 
 import com.jfteam.sharedrawing.config.AppConstants;
 import com.jfteam.sharedrawing.controller.IFavoriteController;
-import com.jfteam.sharedrawing.dto.favorite.AddFavoriteRequestDto;
-import com.jfteam.sharedrawing.dto.favorite.AddFavoriteResponseDto;
-import com.jfteam.sharedrawing.dto.favorite.DeleteFavoriteRequestDto;
-import com.jfteam.sharedrawing.service.impl.FavoriteService;
+import com.jfteam.sharedrawing.dto.drawing.DrawingByIdResDto;
+import com.jfteam.sharedrawing.dto.favorite.AddFavoriteReqDto;
+import com.jfteam.sharedrawing.dto.favorite.AddFavoriteResDto;
+import com.jfteam.sharedrawing.dto.favorite.DeleteFavoriteReqDto;
+import com.jfteam.sharedrawing.service.IFavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(AppConstants.AUTH_PATH + "/favorite")
-public class FavoriteController extends MainController implements IFavoriteController {
+public class FavoriteController extends AbstractController implements IFavoriteController {
 
-    private final FavoriteService service;
+    private final IFavoriteService service;
     @PostMapping("/add")
-    public ResponseEntity<AddFavoriteResponseDto> add(@RequestBody AddFavoriteRequestDto addFavoriteRequestDto) {
-        AddFavoriteResponseDto response = service.create(addFavoriteRequestDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<AddFavoriteResDto> add(@RequestBody AddFavoriteReqDto req, Authentication auth) {
+        return ResponseEntity.ok(
+                mapEntityToDto(
+                        service.create(req.getDrawingId(), auth),
+                        AddFavoriteResDto.class
+                )
+        );
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestBody DeleteFavoriteRequestDto payload) {
-        boolean favoriteDeleted = service.delete(payload);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) {
+        boolean favoriteDeleted = service.delete(id, auth);
         if(favoriteDeleted) {
             return ResponseEntity.noContent().build();
         }

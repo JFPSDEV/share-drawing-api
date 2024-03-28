@@ -1,12 +1,11 @@
 package com.jfteam.sharedrawing.service.impl;
 
-import com.jfteam.sharedrawing.dto.like.LikeRequestDto;
-import com.jfteam.sharedrawing.dto.like.UnlikeRequestDto;
-import com.jfteam.sharedrawing.exception.NoSuchEntityException;
 import com.jfteam.sharedrawing.exception.ServerSideException;
 import com.jfteam.sharedrawing.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import java.util.Objects;
 
 @Service
 public abstract class LikeService<Entity extends Like<LEntity> & IGenericEntity, LEntity extends LikeEntity> extends GetableService<Entity> {
@@ -21,21 +20,24 @@ public abstract class LikeService<Entity extends Like<LEntity> & IGenericEntity,
 
     protected abstract LEntity getLikeByProfileIdAndEntityId(Long profileId, Long entityId);
 
-    public LEntity like(LikeRequestDto payload) {
-        Entity entity = getById(payload.getEntityId());
-        Profile profile = profileSrv.getById(payload.getProfileId());
-
-        LEntity existingLike = (LEntity) entity.getLikes().stream()
-                .filter(like -> like.getProfile().getId() == payload.getProfileId())
+    public LEntity getLikeEntity(Entity entity, Long profileId) {
+        return entity.getLikes().stream()
+                .filter(like -> Objects.equals(like.getProfile().getId(), profileId))
                 .findFirst()
-                 .orElse(null);
+                .orElse(null);
+    }
+
+    public LEntity likeOrDislike(Long entityId, Boolean liked, Authentication auth) {
+        Entity entity = getById(entityId);
+        Profile profile = profileSrv.getByAuth(auth);
+        LEntity existingLike = getLikeEntity(entity, profile.getId());
 
         try {
             if(existingLike != null) {
-                existingLike.setLiked(payload.getLiked());
+                existingLike.setLiked(liked);
                 return getLikeRepo().save(existingLike);
             } else {
-                LEntity newLike = createLikeEntity(profile, payload.getLiked(), entity);
+                LEntity newLike = createLikeEntity(profile, liked, entity);
                 return getLikeRepo().save(newLike);
             }
         } catch (Exception e) {
@@ -43,17 +45,16 @@ public abstract class LikeService<Entity extends Like<LEntity> & IGenericEntity,
         }
     }
 
-    public Boolean unlike(UnlikeRequestDto payload) {
+    public Boolean unlike(Long entityId, Authentication auth) {
         boolean deleted = false;
 
-        Profile profile = profileSrv.getById(payload.getProfileId());
-
-        LikeEntity likeEntity = getLikeRepo().findById(payload.getEntityId())
-                .orElseThrow(() -> new NoSuchEntityException("Entity not found with id: " + payload.getEntityId()));
+        Entity entity = getById(entityId);
+        Profile profile = profileSrv.getByAuth(auth);
+        LEntity existingLike = getLikeEntity(entity, profile.getId());
 
         try {
-            if(likeEntity.getProfile().getId() == profile.getId()) {
-                getLikeRepo().delete((LEntity) likeEntity);
+            if(existingLike != null) {
+                getLikeRepo().delete(existingLike);
                 deleted = true;
             }
             return deleted;

@@ -1,15 +1,13 @@
-package com.jfteam.sharedrawing.dto.tag;
+package com.jfteam.sharedrawing.dto.drawing;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagItemResponseDto {
+public class ShortDrawingResDto {
     private long id;
     private String name;
 }

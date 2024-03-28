@@ -1,23 +1,19 @@
-package com.jfteam.sharedrawing.dto.comment;
+package com.jfteam.sharedrawing.dto.like;
 
+import com.jfteam.sharedrawing.dto.drawing.ShortDrawingResDto;
 import com.jfteam.sharedrawing.dto.profile.ShortProfileResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
+public class LikeDrawingResDto {
     private long id;
-    private String message;
+    private ShortDrawingResDto drawing;
     private ShortProfileResDto profile;
-    private List<CommentDto> replies;
-  //  private List<ShortLikeResponseDto> likes;
-    private int countLikes;
-    private int countDislikes;
+    private Boolean liked;
 }

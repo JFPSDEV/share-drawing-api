@@ -1,4 +1,4 @@
-package com.jfteam.sharedrawing.dto.like;
+package com.jfteam.sharedrawing.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnlikeRequestDto {
-    Long profileId;
-    Long entityId;
+public class AddCommentReqDto {
+    private Long drawingId;
+    private String message;
 }
