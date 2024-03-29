@@ -1,7 +1,6 @@
-package com.jfteam.sharedrawing.controller.impl;
+package com.jfteam.sharedrawing.controller;
 
 import com.jfteam.sharedrawing.config.AppConstants;
-import com.jfteam.sharedrawing.controller.IAuthenticationController;
 import com.jfteam.sharedrawing.dto.AuthReqDto;
 import com.jfteam.sharedrawing.dto.AuthResDto;
 import com.jfteam.sharedrawing.dto.RegisterReqDto;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(AppConstants.PUBLIC_PATH + "/auth")
 @RequiredArgsConstructor
-public class AuthenticationController extends AbstractController implements IAuthenticationController {
+public class AuthenticationController extends AbstractController {
     private final IAuthenticationService service;
 
     @PostMapping("/register")

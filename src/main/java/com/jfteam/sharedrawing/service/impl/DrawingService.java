@@ -1,36 +1,37 @@
 package com.jfteam.sharedrawing.service.impl;
+
 import com.jfteam.sharedrawing.exception.ServerSideException;
 import com.jfteam.sharedrawing.model.*;
-import com.jfteam.sharedrawing.repo.*;
+import com.jfteam.sharedrawing.repo.IDrawingRepository;
+import com.jfteam.sharedrawing.repo.ILikeDrawingRepository;
+import com.jfteam.sharedrawing.repo.IRatingRepository;
+import com.jfteam.sharedrawing.repo.ITagRepository;
 import com.jfteam.sharedrawing.service.IDrawingService;
-import org.hibernate.query.SortDirection;
-import org.modelmapper.ModelMapper;
+import com.jfteam.sharedrawing.utils.SortDirection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Objects;
-import org.springframework.security.core.Authentication;
-
 
 @Service
 public class DrawingService extends LikeService<Drawing, LikeDrawing> implements IDrawingService {
 
     private final ITagRepository tagRepo;
     private final IDrawingRepository drawingRepo;
-    private final ProfileService profileSrv;
     private final ILikeDrawingRepository likeDrawingRepo;
     private final IRatingRepository ratingRepo;
 
-    protected DrawingService(ProfileService profileSrv, ITagRepository tagRepo, IDrawingRepository drawingRepo, ProfileService profileSrv1, ILikeDrawingRepository likeDrawingRepo, IRatingRepository ratingRepo) {
+    protected DrawingService(ProfileService profileSrv, ITagRepository tagRepo, IDrawingRepository drawingRepo, ILikeDrawingRepository likeDrawingRepo, IRatingRepository ratingRepo) {
         super(profileSrv);
         this.tagRepo = tagRepo;
         this.drawingRepo = drawingRepo;
-        this.profileSrv = profileSrv1;
         this.likeDrawingRepo = likeDrawingRepo;
         this.ratingRepo = ratingRepo;
     }

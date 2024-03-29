@@ -4,7 +4,7 @@ import com.jfteam.sharedrawing.model.LikeComment;
 import org.springframework.security.core.Authentication;
 
 
-public interface ICommentService {
+public interface ICommentService extends IGetableService<Comment> {
 
     public LikeComment likeComment(Long commentId, Boolean liked, Authentication auth);
 

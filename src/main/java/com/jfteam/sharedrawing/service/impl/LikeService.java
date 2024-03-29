@@ -1,16 +1,21 @@
 package com.jfteam.sharedrawing.service.impl;
 
 import com.jfteam.sharedrawing.exception.ServerSideException;
-import com.jfteam.sharedrawing.model.*;
+import com.jfteam.sharedrawing.model.IGenericEntity;
+import com.jfteam.sharedrawing.model.Like;
+import com.jfteam.sharedrawing.model.LikeEntity;
+import com.jfteam.sharedrawing.model.Profile;
+import com.jfteam.sharedrawing.service.IProfileService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import java.util.Objects;
 
 @Service
 public abstract class LikeService<Entity extends Like<LEntity> & IGenericEntity, LEntity extends LikeEntity> extends GetableService<Entity> {
-    private final ProfileService profileSrv;
-     public abstract JpaRepository<LEntity, Long> getLikeRepo();
+    protected final IProfileService profileSrv;
+    public abstract JpaRepository<LEntity, Long> getLikeRepo();
 
     protected LikeService(ProfileService profileSrv) {
         this.profileSrv = profileSrv;

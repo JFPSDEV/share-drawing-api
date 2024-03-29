@@ -1,10 +1,10 @@
 package com.jfteam.sharedrawing.service.impl;
 
 import com.jfteam.sharedrawing.model.Profile;
+import com.jfteam.sharedrawing.model.Role;
+import com.jfteam.sharedrawing.model.User;
 import com.jfteam.sharedrawing.repo.IProfileRepository;
 import com.jfteam.sharedrawing.repo.IUserRepository;
-import com.jfteam.sharedrawing.model.User;
-import com.jfteam.sharedrawing.model.Role;
 import com.jfteam.sharedrawing.service.IAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,10 @@
 package com.jfteam.sharedrawing.service.impl;
 
 import com.jfteam.sharedrawing.exception.ServerSideException;
-import com.jfteam.sharedrawing.model.*;
+import com.jfteam.sharedrawing.model.Comment;
+import com.jfteam.sharedrawing.model.Drawing;
+import com.jfteam.sharedrawing.model.LikeComment;
+import com.jfteam.sharedrawing.model.Profile;
 import com.jfteam.sharedrawing.repo.ICommentRepository;
 import com.jfteam.sharedrawing.repo.ILikeCommentRepository;
 import com.jfteam.sharedrawing.service.ICommentService;

@@ -1,10 +1,13 @@
 package com.jfteam.sharedrawing.service;
 
 
-import org.hibernate.query.SortDirection;
+import com.jfteam.sharedrawing.model.Drawing;
+import com.jfteam.sharedrawing.model.LikeDrawing;
+import com.jfteam.sharedrawing.model.Rating;
+import com.jfteam.sharedrawing.utils.SortDirection;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
-import com.jfteam.sharedrawing.model.*;
+
 import java.util.List;
 
 

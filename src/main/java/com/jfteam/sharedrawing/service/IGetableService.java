@@ -1,8 +1,9 @@
 package com.jfteam.sharedrawing.service;
 
-import java.util.List;
 import com.jfteam.sharedrawing.model.IGenericEntity;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Transactional

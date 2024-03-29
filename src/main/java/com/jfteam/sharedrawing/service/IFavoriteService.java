@@ -1,8 +1,5 @@
 package com.jfteam.sharedrawing.service;
 
-import com.jfteam.sharedrawing.dto.favorite.AddFavoriteReqDto;
-import com.jfteam.sharedrawing.dto.favorite.AddFavoriteResDto;
-import com.jfteam.sharedrawing.dto.favorite.DeleteFavoriteReqDto;
 import com.jfteam.sharedrawing.model.Favorite;
 import org.springframework.security.core.Authentication;
 

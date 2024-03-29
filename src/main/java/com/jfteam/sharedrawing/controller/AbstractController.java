@@ -1,9 +1,8 @@
-package com.jfteam.sharedrawing.controller.impl;
+package com.jfteam.sharedrawing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfteam.sharedrawing.advice.AbcExceptionHandler;
 import com.jfteam.sharedrawing.config.AppConstants;
-import com.jfteam.sharedrawing.dto.comment.CommentDto;
 import com.jfteam.sharedrawing.dto.error.ErrorDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +28,7 @@ public abstract class AbstractController implements AuthenticationEntryPoint {
         response.flushBuffer();
     }
 
-    public static <Entity, Dto> Dto mapEntityToDto(Entity entity, Class<Dto> dtoClass) {
+    public static <Entity, Dto> Dto mapModel(Entity entity, Class<Dto> dtoClass) {
         return modelMapper.map(entity, dtoClass);
     }
 }

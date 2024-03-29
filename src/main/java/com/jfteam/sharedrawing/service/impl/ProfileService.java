@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,8 +19,6 @@ public class ProfileService extends GetableService<Profile> implements IProfileS
     private static final Logger logger = LoggerFactory.getLogger(ProfileService.class);
     private final IProfileRepository profileRepo;
     private final IUserRepository userRepo;
-
-
 
     public Profile getByEmail(String userEmail) {
         try {
